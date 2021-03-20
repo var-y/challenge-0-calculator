@@ -1,0 +1,96 @@
+* {
+    text-align: center;
+    font-size: 1.6rem;
+    color: white;
+    box-sizing: border-box;
+
+}
+
+body {
+
+    background: linear-gradient(#610bfc, #ff37cc);
+
+}
+
+form {
+    margin: 0 auto;
+    padding: none;
+    background: linear-gradient(#5dff00, #00ddff);
+    color: #610bfc;
+    width: 50%;
+}
+
+
+#copy-btn {
+    width: 98%;
+    transition: ease-in-out 0.3s;
+}
+
+
+#copy-btn:hover {
+    -webkit-transform: rotateX(-180deg);
+    -moz-transform: rotateX(-180deg);
+    -ms-transform: rotateX(-180deg);
+    -o-transform: rotateX(-180deg);
+    transform: rotateX(-180deg);
+}
+
+
+.copy-btn:hover {
+    -webkit-transform: rotateX(-180deg);
+    -moz-transform: rotateX(-180deg);
+    -ms-transform: rotateX(-180deg);
+    -o-transform: rotateX(-180deg);
+    transform: rotateX(-180deg);
+}
+
+
+
+#copy {
+    animation: none;
+    transform: none;
+    width: 30%;
+}
+
+input[type=display] {
+    background: #e904e9ee;
+    color: #0f0f6d;
+    width: 10%;
+    margin: 10px;
+    height: 100px;
+    color: white;
+    border-image: repeating-linear-gradient(45deg, #610bfc, #ff37cc) 1;
+    border-image-width: 5px;
+}
+
+input[type=display]:hover { 
+    transform: scale(1.1);
+    -webkit-transform: rotate(-360deg);
+    -moz-transform: rotate(-360deg);
+    -ms-transform: rotate(-360deg);
+    -o-transform: rotate(-360deg);
+    transform: rotate(-360deg);
+  
+}
+
+input[type=button] {
+    background: rgb(255, 173, 20);
+    color: #0f0f6d;
+    width: 10%;
+    padding: 16px;
+    margin: 10px;
+    transition: ease-in-out 0.4s;
+    border-image: repeating-linear-gradient(45deg, #610bfc, #ff37cc) 1;
+    border-image-width: 5px;
+    box-sizing: border-box;
+}
+input:hover{
+    transform: scale(1.1);
+    -webkit-transform: rotate(-360deg);
+    -moz-transform: rotate(-360deg);
+    -ms-transform: rotate(-360deg);
+    -o-transform: rotate(-360deg);
+    transform: rotate(-360deg);
+} 
+
+

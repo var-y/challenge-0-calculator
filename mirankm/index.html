@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://code.jquery.com/jquery-3.4.1.js"
+        integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+    <script src="app.js"></script>
+    <title>Document</title>
+</head>
+
+<body>
+    
+    <h1>basic calculator</h1>
+    <br>
+    <form id="myform" name="calc" action="submit">
+        <input id="copy-btn" class="copy-btn" name="display" type="display">
+        <input id="copy" value="copy" onclick="copyText()" type="button">
+        <br>
+        <input name="button" type="button" onclick="calc.display.value+='1'" value="1">
+        <input name="button" type="button" onclick="calc.display.value+='2'" value="2">
+        <input name="button" type="button" onclick="calc.display.value+='3'" value="3">
+        <input name="button" type="button" onclick="calc.display.value+='-'" value="-">
+
+        <br>
+        <input name="button" type="button" onclick="calc.display.value+='4'" value="4">
+        <input name="button" type="button" onclick="calc.display.value+='5'" value="5">
+        <input name="button" type="button" onclick="calc.display.value+='6'" value="6">
+        <input name="button" type="button" onclick="calc.display.value+='*'" value="*">
+        <br>
+        <input name="button" type="button" onclick="calc.display.value+='7'" value="7">
+        <input name="button" type="button" onclick="calc.display.value+='8'" value="8">
+        <input name="button" type="button" onclick="calc.display.value+='9'" value="9">
+        <input name="button" type="button" onclick="calc.display.value+='+'" value="+">
+
+        <br>
+        <input name="button" type="button" value="0" onclick="calc.display.value+='0'">
+        <input name="button" type="button" onclick="calc.display.value=''" value="C">
+        <input name="button" type="button" onclick="calc.display.value= eval(calc.display.value)" value="=">
+        <input name="button" type="button" onclick="calc.display.value+='/'" value="&#247;">
+        <br>
+
+    </form>
+
+    <script>
+        function copyText() {
+
+            var copyText = document.getElementById("copy-btn");
+            copyText.select();
+            document.execCommand("copy");
+            copyText.select();
+        }
+
+    </script>
+
+</body>
+
+</html>
