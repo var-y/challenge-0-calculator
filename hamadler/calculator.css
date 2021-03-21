@@ -1,0 +1,139 @@
+/* sher calculator */
+body {
+  /* background: linear-gradient(90deg, #acb6e5 0%, #86fde8 100%);
+   */
+  background-color: #ee5522;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 200 200'%3E%3Cdefs%3E%3ClinearGradient id='a' gradientUnits='userSpaceOnUse' x1='100' y1='33' x2='100' y2='-3'%3E%3Cstop offset='0' stop-color='%23000' stop-opacity='0'/%3E%3Cstop offset='1' stop-color='%23000' stop-opacity='1'/%3E%3C/linearGradient%3E%3ClinearGradient id='b' gradientUnits='userSpaceOnUse' x1='100' y1='135' x2='100' y2='97'%3E%3Cstop offset='0' stop-color='%23000' stop-opacity='0'/%3E%3Cstop offset='1' stop-color='%23000' stop-opacity='1'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cg fill='%23ca481d' fill-opacity='0.6'%3E%3Crect x='100' width='100' height='100'/%3E%3Crect y='100' width='100' height='100'/%3E%3C/g%3E%3Cg fill-opacity='0.5'%3E%3Cpolygon fill='url(%23a)' points='100 30 0 0 200 0'/%3E%3Cpolygon fill='url(%23b)' points='100 100 0 130 0 100 200 100 200 130'/%3E%3C/g%3E%3C/svg%3E");
+}
+table {
+  margin: auto;
+  background-color: #073b4c;
+  width: 295px;
+  height: 325px;
+  text-align: center;
+  margin-top: 50px;
+  border-radius: 4px;
+}
+#calculator {
+  position: absolute;
+  max-width: 80%;
+  left: 58%;
+  top: 10%;
+}
+input {
+  outline: 0;
+  position: relative;
+  left: 5px;
+  top: 5px;
+  border: 0;
+  color: #495069;
+  background-color: 4px;
+  width: 60px;
+  height: 50px;
+  float: left;
+  margin: 5px;
+  font-size: 20px;
+  box-shadow: 0 4px rgba(0, 0, 0, 0.2);
+}
+/* add input hover effectg */
+input:hover {
+  border: 0 solid #000;
+  color: #495069;
+  background-color: #ffd166;
+  border-radius: 4px;
+  width: 60px;
+  height: 50px;
+  float: left;
+  margin: 5px;
+  font-size: 20px;
+  box-shadow: 0 4px #d3ac50;
+  transform: scale(1.1);
+  z-index: 50;
+  transition: all 0.1s;
+}
+#answer {
+  width: 270px;
+  font-size: 26px;
+  text-align: center;
+  background-color: #f1faeb;
+  float: left;
+}
+/* answer hover effect */
+#answer:hover {
+  width: 270px;
+  font-size: 26px;
+  text-align: center;
+  box-shadow: 0 4px rgba(0, 0, 0, 0.2);
+  background-color: #f1faeb;
+}
+
+.operator {
+  background-color: #06d6a0;
+  position: relative;
+}
+
+/* hover */
+.operator:hover {
+  background-color: #06b486;
+  box-shadow: 0 4px #008663;
+}
+#clear {
+  float: left;
+  position: relative;
+  display: block;
+  background-color: #ef476f;
+  color: white;
+  margin-bottom: 15px;
+}
+/* hover */
+#clear:hover {
+  float: left;
+  display: block;
+  background-color: #c03354;
+  margin-bottom: 15px;
+  box-shadow: 0 4px #8a1d36;
+}
+
+/* rotation animation */
+@-webkit-keyframes rotating /* Safari and Chrome */ {
+  from {
+    -webkit-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@keyframes rotating {
+  from {
+    -ms-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  to {
+    -ms-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+/* زۆر داوای لێبوردن ئەکەم */
+.rotating {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+
+  -webkit-animation: rotating 25s linear infinite;
+  -moz-animation: rotating 25s linear infinite;
+  -ms-animation: rotating 25s linear infinite;
+  -o-animation: rotating 25s linear infinite;
+  animation: rotating 25s linear infinite;
+}
