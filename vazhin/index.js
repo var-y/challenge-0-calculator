@@ -49,18 +49,7 @@ class Calculator {
       return;
 
     this.inputQueue.push(this.newExpression);
-
-    // if (this.inputQueue.length > 1)
-    //   this.inputQueue.sort(this.compareExpressions.bind(this));
   }
-
-  // compareExpressions(A, B) {
-  //   const precedenceOfA = this.precedenceScore[A.operator];
-  //   const precedenceOfB = this.precedenceScore[B.operator];
-  //   if (precedenceOfA > precedenceOfB) return -1;
-  //   if (precedenceOfA < precedenceOfB) return +1;
-  //   return 0;
-  // }
 
   isValidExpression(expression) {
     /*
@@ -74,8 +63,6 @@ class Calculator {
     return isValid;
   }
 
-  // Utilities
-
   calculateExpression(expression) {
     return this.operations[expression.operator](
       expression.leftNum,
@@ -83,8 +70,38 @@ class Calculator {
     );
   }
 
+  // TODO: simplify this method, I don't think I need the lastIndex method
+  setNewExpressionNumber(number) {
+    if (this.lastType === 'OPERATOR') {
+      this.newExpression.rightNum = number;
+      // automatically set the leftNum
+      if (this.lastIndex()) {
+        this.newExpression.leftNum = this.inputQueue[this.lastIndex()].rightNum;
+        this.addExpression();
+      }
+    } else if (this.lastType === null) this.newExpression.leftNum = number;
+    this.setLastType('NUMBER');
+  }
+
+  setNewExpressionOperator(operator) {
+    this.newExpression.operator = operator;
+    this.setLastType('OPERATOR');
+  }
+
+  setLastType(type) {
+    this.lastType = type;
+  }
+
+  // Utilities
+
   isEmpty(arr) {
     return arr.length === 0;
+  }
+
+  lastIndex() {
+    const lastIndex = this.inputQueue.length - 1;
+    if (lastIndex >= 0) return lastIndex;
+    return null;
   }
 }
 
@@ -111,6 +128,32 @@ calculator.newExpression = {
 };
 calculator.addExpression();
 
-// console.log(calculator.inputQueue);
-
+console.log(calculator.inputQueue);
 console.log(calculator.calculate(calculator.inputQueue));
+
+// Initialling UI elements
+
+const display = document.getElementById('display');
+const buttons = document.querySelectorAll('button');
+
+// Available buttons
+
+const numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+const operators = ['+', '-', '×', '÷'];
+const equalSign = '=';
+const actions = [AC];
+const symbols = ['(', ')', '.']; // TODO: handle parenthesis
+
+const eventHandlers = {
+  NUMBER: handleNumber,
+  OPERATOR: handleOperator,
+  EQUAL: handleResult,
+  AC: handleClearAll,
+  DOT: handleDot,
+};
+
+////////////// Event assignment
+
+buttons.forEach((button) => {
+  button.addEventListener('click', allButtons[button.textContent]);
+});
