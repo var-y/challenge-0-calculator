@@ -92,6 +92,12 @@ class Calculator {
     this.lastType = type;
   }
 
+  clearAll() {
+    this.lastType = null;
+    this.newExpression = null;
+    this.inputQueue = [];
+  }
+
   // Utilities
 
   isEmpty(arr) {
