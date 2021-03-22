@@ -114,44 +114,89 @@ class Calculator {
   }
 }
 
+// Calculator instance
+
 const calculator = new Calculator();
 
-calculator.setNewExpressionNumber(2);
-calculator.setNewExpressionOperator('+');
-calculator.setNewExpressionNumber(9);
+// UI elements
 
-calculator.setNewExpressionOperator('×');
-calculator.setNewExpressionNumber(1);
+const display = document.getElementById('display');
+const buttons = document.querySelectorAll('button');
 
-calculator.setNewExpressionOperator('÷');
-calculator.setNewExpressionNumber(3);
+// Display field methods
 
-console.log(calculator.inputQueue);
-console.log(calculator.calculate(calculator.inputQueue));
+function getDisplayedText() {
+  return display.value;
+}
 
-// Initialling UI elements
+function setDisplayedText(updatedText) {
+  display.value = updatedText;
+}
 
-// const display = document.getElementById('display');
-// const buttons = document.querySelectorAll('button');
+function write(output) {
+  setDisplayedText(getDisplayedText() + output);
+}
+
+// Event Handler methods
+
+function handleNumber(event) {
+  calculator.setNewExpressionNumber(parseFloat(event.target.textContent));
+  write(event.target.textContent);
+}
+
+function handleOperator(event) {
+  // check if there's no numbers
+  if (getDisplayedText() === '') return;
+  calculator.setNewExpressionOperator(event.target.textContent);
+  write(event.target.textContent);
+}
+
+function handleResult() {
+  // TODO: check if there's no operators
+
+  // check if there's no numbers
+  if (getDisplayedText() === '') return;
+  // check if the last element is an operator
+  if (calculator.lastType === 'OPERATOR') return;
+
+  setDisplayedText(calculator.calculate(calculator.inputQueue));
+}
+
+function handleClearAll() {
+  setDisplayedText('');
+  calculator.clearAll();
+}
+
+function handleDot() {}
+function handleClosingParenthesis() {}
+function handleOpeningParenthesis() {}
 
 // Available buttons
 
-// const numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
-// const operators = ['+', '-', '×', '÷'];
-// const equalSign = '=';
-// const actions = [AC];
-// const symbols = ['(', ')', '.']; // TODO: handle parenthesis
+const eventHandlers = {
+  0: handleNumber,
+  1: handleNumber,
+  2: handleNumber,
+  3: handleNumber,
+  4: handleNumber,
+  5: handleNumber,
+  6: handleNumber,
+  7: handleNumber,
+  8: handleNumber,
+  9: handleNumber,
+  '.': handleDot,
+  '+': handleOperator,
+  '-': handleOperator,
+  '×': handleOperator,
+  '÷': handleOperator,
+  '=': handleResult,
+  AC: handleClearAll,
+  ')': handleClosingParenthesis,
+  '(': handleOpeningParenthesis,
+};
 
-// const eventHandlers = {
-//   NUMBER: handleNumber,
-//   OPERATOR: handleOperator,
-//   EQUAL: handleResult,
-//   AC: handleClearAll,
-//   DOT: handleDot,
-// };
+// Adding event handlers to elements
 
-////////////// Event assignment
-
-// buttons.forEach((button) => {
-//   button.addEventListener('click', allButtons[button.textContent]);
-// });
+buttons.forEach((button) => {
+  button.addEventListener('click', eventHandlers[button.textContent]);
+});
