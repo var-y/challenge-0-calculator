@@ -1,5 +1,8 @@
 const display = document.getElementById('display');
 const buttons = document.querySelectorAll('button');
+let stack = [];
+
+////////////// Utilities
 
 function getDisplayedText() {
   return display.value;
@@ -15,29 +18,6 @@ function setDisplayedText(updatedText) {
 
 function write(output) {
   setDisplayedText(getDisplayedText() + output);
-}
-
-let stack = [];
-
-// TODO: calculate the statement
-function calculate(stack) {
-  stack.forEach((elem) => console.log(elem));
-}
-
-function handleNumber(event) {
-  write(event.target.textContent);
-}
-
-function handleOperator(event) {
-  // check if there's no numbers
-  if (getDisplayedText() === '') return;
-  stack.push(getLastNumber(), event.target.textContent);
-  write(event.target.textContent);
-}
-
-function handleClearAll(event) {
-  setDisplayedText('');
-  stack = [];
 }
 
 function getLastNumber() {
@@ -58,6 +38,73 @@ function getLastNumber() {
   return lastNumber;
 }
 
+const orderOfOperations = {
+  '×': 0,
+  '÷': 1,
+  '+': 2,
+  '-': 3,
+};
+
+function isGreater(operation1, operation2) {
+  return orderOfOperations[operation1] > orderOfOperations[operation2];
+}
+
+const calculator = {
+  '+': (num1, num2) => num1 + num2,
+  '-': (num1, num2) => num1 - num2,
+  '×': (num1, num2) => num1 * num2,
+  '÷': (num1, num2) => num1 / num2,
+};
+
+function calculate(stack, queue = []) {
+  for (let i = 1; i < stack.length; i += 2) {
+    for (let j = i + 2; j < stack.length; j += 2) {
+      if (isGreater(stack[i], stack[j])) {
+        let temp = stack[i];
+        stack[i] = stack[j];
+        stack[j] = temp;
+      }
+    }
+  }
+
+  // To be continued...
+
+  console.log(stack);
+
+  // queue.sort(compareOrderOfOperations);
+
+  // if (queue.length === 0) {
+  //   return stack[stack.length - 1];
+  // }
+
+  // const currentOperator = queue.shift();
+
+  // const index = stack.indexOf(currentOperator);
+
+  // const result = calculator[currentOperator](
+  //   stack[index - 1],
+  //   stack[index + 1]
+  // );
+}
+
+////////////// Event handlers
+
+function handleNumber(event) {
+  write(event.target.textContent);
+}
+
+function handleOperator(event) {
+  // check if there's no numbers
+  if (getDisplayedText() === '') return;
+  stack.push(parseInt(getLastNumber()), event.target.textContent);
+  write(event.target.textContent);
+}
+
+function handleClearAll(event) {
+  setDisplayedText('');
+  stack = [];
+}
+
 function handleResult(event) {
   // TODO: check if there's no operators
 
@@ -66,12 +113,14 @@ function handleResult(event) {
   // check if the last element is an operator
   if (operations[getDisplayedText()[getDisplayedLength() - 1]]) return;
 
-  stack.push(getLastNumber());
-  calculate(stack);
+  stack.push(parseInt(getLastNumber()));
+  setDisplayedText(calculate(stack));
 }
 
 function handleClosingParenthesis() {}
 function handleOpeningParenthesis() {}
+
+////////////// The available buttons
 
 const numbers = {
   0: handleNumber,
@@ -109,6 +158,8 @@ const allButtons = {
   ...numbers,
   ...parenthesis,
 };
+
+////////////// Event assignment
 
 buttons.forEach((button) => {
   button.addEventListener('click', allButtons[button.textContent]);
