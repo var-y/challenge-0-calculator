@@ -38,6 +38,7 @@ function getLastNumber() {
   return lastNumber;
 }
 
+// TODO: multiplication and division have the same precedence, same true for addition and subtraction
 const orderOfOperations = {
   '×': 0,
   '÷': 1,
