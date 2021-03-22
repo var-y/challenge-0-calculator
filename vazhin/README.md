@@ -76,8 +76,8 @@ function calculate(inputQueue) {
   2. calculate the found expression
   3. remove it from inputQueue after calculating it
   4. if inputQueue is empty now, return the result of it
-  5. if previous expression exists, set its leftNum to result
-     if next expression exists, set its rightNum to result
+  5. if previous expression exists, set its rightNum to result
+     if next expression exists, set its leftNum to result
   6. return & call calculate again and pass it updated inputQueue
  */
 }

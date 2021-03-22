@@ -13,10 +13,34 @@ class Calculator {
   }
 
   calculate(inputQueue) {
-    const result = this.calculateExpression(inputQueue[0]);
-    inputQueue.shift();
+    // 1. look for first operator with highest precedence from left to right
+    const currentOperation = {
+      expression: null,
+      precedence: 0,
+      index: null,
+    };
+    inputQueue.forEach((expression, index) => {
+      const precedence = this.precedenceScore[expression.operator];
+      if (precedence > currentOperation.precedence) {
+        currentOperation.expression = expression;
+        currentOperation.precedence = precedence;
+        currentOperation.index = index;
+      }
+    });
+    // 2. calculate the found expression
+    const result = this.calculateExpression(currentOperation.expression);
+    // 3. remove it from inputQueue after calculating it
+    inputQueue.splice(currentOperation.index, 1);
+    // 4. if inputQueue is empty now, return the result of it
     if (this.isEmpty(inputQueue)) return result;
-    inputQueue[0].leftNum = result;
+    // 5. if previous expression exists, set its rightNum to result
+    //    if next expression exists, set its leftNum to result
+    if (inputQueue[currentOperation.index - 1])
+      inputQueue[currentOperation.index - 1].rightNum = result;
+    if (inputQueue[currentOperation.index])
+      // because the expression has been removed, the next is in its place now
+      inputQueue[currentOperation.index].leftNum = result;
+    // 6. return & call calculate again and pass it updated inputQueue
     return this.calculate(inputQueue);
   }
 
@@ -26,17 +50,17 @@ class Calculator {
 
     this.inputQueue.push(this.newExpression);
 
-    if (this.inputQueue.length > 1)
-      this.inputQueue.sort(this.compareExpressions.bind(this));
+    // if (this.inputQueue.length > 1)
+    //   this.inputQueue.sort(this.compareExpressions.bind(this));
   }
 
-  compareExpressions(A, B) {
-    const precedenceOfA = this.precedenceScore[A.operator];
-    const precedenceOfB = this.precedenceScore[B.operator];
-    if (precedenceOfA > precedenceOfB) return -1;
-    if (precedenceOfA < precedenceOfB) return +1;
-    return 0;
-  }
+  // compareExpressions(A, B) {
+  //   const precedenceOfA = this.precedenceScore[A.operator];
+  //   const precedenceOfB = this.precedenceScore[B.operator];
+  //   if (precedenceOfA > precedenceOfB) return -1;
+  //   if (precedenceOfA < precedenceOfB) return +1;
+  //   return 0;
+  // }
 
   isValidExpression(expression) {
     /*
@@ -69,17 +93,24 @@ const calculator = new Calculator();
 calculator.newExpression = {
   operator: '+',
   leftNum: 2,
-  rightNum: 3.5,
+  rightNum: 9,
 };
 calculator.addExpression();
 
 calculator.newExpression = {
   operator: '×',
-  leftNum: 3.5,
-  rightNum: 3.5,
+  leftNum: 9,
+  rightNum: 1,
 };
 calculator.addExpression();
 
-console.log(calculator.inputQueue);
+calculator.newExpression = {
+  operator: '÷',
+  leftNum: 1,
+  rightNum: 3,
+};
+calculator.addExpression();
+
+// console.log(calculator.inputQueue);
 
 console.log(calculator.calculate(calculator.inputQueue));
