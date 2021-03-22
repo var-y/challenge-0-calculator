@@ -20,7 +20,7 @@ You can look at my progress in the TODO below...
 4 primary entities: operations (string), numbers (float), expressions (2 numbers & 1 operator, inputQueue (sorted-expressions based on operator precedence))
 
 ```js
-const lastType = 'NUMBER' | 'OPERATOR';
+const lastType = 'NUMBER' | 'OPERATOR' | null;
 
 const expression = {
   operator: '+',
@@ -28,12 +28,16 @@ const expression = {
   rightNum: 3.5,
 };
 
-const lastOperator = '*';
+const newExpression = expression | null;
 
 /*
-
-Before inserting the expression into inputQueue compare it with the lastOperator,
+I thought:
+Before inserting the newExpression into inputQueue compare it with the lastOperator,
 to decide which end (fist || last) to insert it into based on order of precedence
+
+But conclusion:
+I have to push the newExpression into the inputQueue
+then sort the inputQueue based on each expression's operator property
 
 */
 
