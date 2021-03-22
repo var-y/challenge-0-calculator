@@ -1,7 +1,11 @@
 class Calculator {
   constructor() {
     this.lastType = null;
-    this.newExpression = null;
+    this.newExpression = {
+      rightNum: null,
+      operator: null,
+      leftNum: null,
+    };
     this.inputQueue = [];
     this.precedenceScore = { '×': 2, '÷': 2, '+': 1, '-': 1 };
     this.operations = {
@@ -32,7 +36,10 @@ class Calculator {
     // 3. remove it from inputQueue after calculating it
     inputQueue.splice(currentOperation.index, 1);
     // 4. if inputQueue is empty now, return the result of it
-    if (this.isEmpty(inputQueue)) return result;
+    if (this.isEmpty(inputQueue)) {
+      this.clearAll();
+      return result;
+    }
     // 5. if previous expression exists, set its rightNum to result
     //    if next expression exists, set its leftNum to result
     if (inputQueue[currentOperation.index - 1])
@@ -48,7 +55,8 @@ class Calculator {
     if (!this.newExpression || !this.isValidExpression(this.newExpression))
       return;
 
-    this.inputQueue.push(this.newExpression);
+    const newExpression = { ...this.newExpression };
+    this.inputQueue.push(newExpression);
   }
 
   isValidExpression(expression) {
@@ -70,20 +78,17 @@ class Calculator {
     );
   }
 
-  // TODO: simplify this method, I don't think I need the lastIndex method
   setNewExpressionNumber(number) {
     if (this.lastType === 'OPERATOR') {
       this.newExpression.rightNum = number;
-      // automatically set the leftNum
-      if (this.lastIndex()) {
-        this.newExpression.leftNum = this.inputQueue[this.lastIndex()].rightNum;
-        this.addExpression();
-      }
+      this.addExpression();
     } else if (this.lastType === null) this.newExpression.leftNum = number;
     this.setLastType('NUMBER');
   }
 
   setNewExpressionOperator(operator) {
+    if (!this.isEmpty(this.inputQueue))
+      this.newExpression.leftNum = this.newExpression.rightNum;
     this.newExpression.operator = operator;
     this.setLastType('OPERATOR');
   }
@@ -94,7 +99,11 @@ class Calculator {
 
   clearAll() {
     this.lastType = null;
-    this.newExpression = null;
+    this.newExpression = {
+      rightNum: null,
+      operator: null,
+      leftNum: null,
+    };
     this.inputQueue = [];
   }
 
@@ -103,63 +112,46 @@ class Calculator {
   isEmpty(arr) {
     return arr.length === 0;
   }
-
-  lastIndex() {
-    const lastIndex = this.inputQueue.length - 1;
-    if (lastIndex >= 0) return lastIndex;
-    return null;
-  }
 }
 
 const calculator = new Calculator();
 
-calculator.newExpression = {
-  operator: '+',
-  leftNum: 2,
-  rightNum: 9,
-};
-calculator.addExpression();
+calculator.setNewExpressionNumber(2);
+calculator.setNewExpressionOperator('+');
+calculator.setNewExpressionNumber(9);
 
-calculator.newExpression = {
-  operator: '×',
-  leftNum: 9,
-  rightNum: 1,
-};
-calculator.addExpression();
+calculator.setNewExpressionOperator('×');
+calculator.setNewExpressionNumber(1);
 
-calculator.newExpression = {
-  operator: '÷',
-  leftNum: 1,
-  rightNum: 3,
-};
-calculator.addExpression();
+calculator.setNewExpressionOperator('÷');
+calculator.setNewExpressionNumber(3);
 
 console.log(calculator.inputQueue);
 console.log(calculator.calculate(calculator.inputQueue));
 
 // Initialling UI elements
 
-const display = document.getElementById('display');
-const buttons = document.querySelectorAll('button');
+// const display = document.getElementById('display');
+// const buttons = document.querySelectorAll('button');
 
 // Available buttons
 
-const numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
-const operators = ['+', '-', '×', '÷'];
-const equalSign = '=';
-const actions = [AC];
-const symbols = ['(', ')', '.']; // TODO: handle parenthesis
+// const numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+// const operators = ['+', '-', '×', '÷'];
+// const equalSign = '=';
+// const actions = [AC];
+// const symbols = ['(', ')', '.']; // TODO: handle parenthesis
 
-const eventHandlers = {
-  NUMBER: handleNumber,
-  OPERATOR: handleOperator,
-  EQUAL: handleResult,
-  AC: handleClearAll,
-  DOT: handleDot,
-};
+// const eventHandlers = {
+//   NUMBER: handleNumber,
+//   OPERATOR: handleOperator,
+//   EQUAL: handleResult,
+//   AC: handleClearAll,
+//   DOT: handleDot,
+// };
 
 ////////////// Event assignment
 
-buttons.forEach((button) => {
-  button.addEventListener('click', allButtons[button.textContent]);
-});
+// buttons.forEach((button) => {
+//   button.addEventListener('click', allButtons[button.textContent]);
+// });
