@@ -9,8 +9,9 @@ You can look at my progress in the TODO below...
 - [x] Disable input text (To avoid arbitrary patterns)
 - [x] Define a Calculator class to handle calculations
 - [x] Calculate the result with keeping order of operations in mind ( \* and / => + and - )
-- [ ] Identify type of last input (whether number or operator)
-- [ ] Update the display
+- [x] Identify type of last input (whether number or operator)
+- [x] Update the display
+- [ ] Handle the dot button
 - [ ] Handle the change of operator precedence when parenthesis are added
 - [ ] Implement keyboard support
 - [ ] Handle negative numbers
