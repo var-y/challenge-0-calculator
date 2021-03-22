@@ -13,6 +13,7 @@ You can look at my progress in the TODO below...
 - [ ] Calculate the result with keeping order of operations in mind
 - [ ] Handle negative numbers
 - [ ] Get the order of operations right ( \* => / => + => - )
+- [ ] Identify type of last input (whether number or operator)
 - [ ] Handle errors & edge cases
 - [ ] Clean up the code
 
