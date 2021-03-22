@@ -14,6 +14,7 @@ class Calculator {
       '×': (num1, num2) => num1 * num2,
       '÷': (num1, num2) => num1 / num2,
     };
+    this.hasOperator = false;
   }
 
   calculate(inputQueue) {
@@ -90,6 +91,7 @@ class Calculator {
     if (!this.isEmpty(this.inputQueue))
       this.newExpression.leftNum = this.newExpression.rightNum;
     this.newExpression.operator = operator;
+    this.hasOperator = true; // TODO: this is to avoid an edge case in the UI, find a better way to handle it
     this.setLastType('OPERATOR');
   }
 
@@ -105,6 +107,7 @@ class Calculator {
       leftNum: null,
     };
     this.inputQueue = [];
+    this.hasOperator = false;
   }
 
   // Utilities
@@ -152,8 +155,8 @@ function handleOperator(event) {
 }
 
 function handleResult() {
-  // TODO: check if there's no operators
-
+  // check if there's no operators
+  if (!calculator.hasOperator) return;
   // check if there's no numbers
   if (getDisplayedText() === '') return;
   // check if the last element is an operator
