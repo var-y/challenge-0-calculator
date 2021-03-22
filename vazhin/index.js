@@ -49,5 +49,9 @@ class Calculator {
       num operator num
       openParenthesis num operator num closedParenthesis
     */
+
+    const isValid =
+      expression.leftNum && expression.operator && expression.rightNum;
+    return isValid;
   }
 }
