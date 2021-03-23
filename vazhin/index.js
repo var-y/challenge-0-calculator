@@ -61,12 +61,6 @@ class Calculator {
   }
 
   isValidExpression(expression) {
-    /*
-      TODO: check if it's these patterns:
-      num operator num
-      openParenthesis num operator num closedParenthesis
-    */
-
     const isValid =
       expression.leftNum && expression.operator && expression.rightNum;
     return isValid;
@@ -148,12 +142,16 @@ function write(output) {
   setDisplayedText(getDisplayedText() + output);
 }
 
+function isEmpty() {
+  return getDisplayedLength() === 0;
+}
+
 function isLastCharDot() {
   return getLastChar() === '.';
 }
 
 function isLastCharOperator() {
-  return calculator.operations[getDisplayedText()[getDisplayedLength() - 1]];
+  return calculator.operations[getLastChar()];
 }
 
 function getLastNumber() {
@@ -181,23 +179,18 @@ function handleNumber(event) {
 }
 
 function handleOperator(event) {
-  // check if there's no numbers
-  if (getDisplayedText() === '') return;
-  // check if last character is operator
+  if (isEmpty()) return;
   if (isLastCharOperator()) return;
-  // check if last character is dot
   if (isLastCharDot()) return;
+
   calculator.setNewExpressionNumber(parseFloat(getLastNumber()));
   calculator.setNewExpressionOperator(event.target.textContent);
   write(event.target.textContent);
 }
 
 function handleResult() {
-  // check if there's no operators
   if (!calculator.hasOperator) return;
-  // check if there's no numbers
-  if (getDisplayedText() === '') return;
-  // check if last character is operator
+  if (isEmpty()) return;
   if (isLastCharOperator()) return;
 
   calculator.setNewExpressionNumber(parseFloat(getLastNumber()));
@@ -210,9 +203,7 @@ function handleClearAll() {
 }
 
 function handleDot(event) {
-  // check if there's no numbers
-  if (getDisplayedText() === '') return;
-  // check if last character is dot
+  if (isEmpty()) return;
   if (isLastCharDot()) return;
   write(event.target.textContent);
 }
