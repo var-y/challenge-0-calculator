@@ -148,12 +148,16 @@ function write(output) {
   setDisplayedText(getDisplayedText() + output);
 }
 
+function isEmpty() {
+  return getDisplayedLength() === 0;
+}
+
 function isLastCharDot() {
   return getLastChar() === '.';
 }
 
 function isLastCharOperator() {
-  return calculator.operations[getDisplayedText()[getDisplayedLength() - 1]];
+  return calculator.operations[getLastChar()];
 }
 
 function getLastNumber() {
@@ -181,8 +185,8 @@ function handleNumber(event) {
 }
 
 function handleOperator(event) {
-  // check if there's no numbers
-  if (getDisplayedText() === '') return;
+  // check if it's empty
+  if (isEmpty()) return;
   // check if last character is operator
   if (isLastCharOperator()) return;
   // check if last character is dot
@@ -195,8 +199,8 @@ function handleOperator(event) {
 function handleResult() {
   // check if there's no operators
   if (!calculator.hasOperator) return;
-  // check if there's no numbers
-  if (getDisplayedText() === '') return;
+  // check if it's empty
+  if (isEmpty()) return;
   // check if last character is operator
   if (isLastCharOperator()) return;
 
@@ -210,8 +214,8 @@ function handleClearAll() {
 }
 
 function handleDot(event) {
-  // check if there's no numbers
-  if (getDisplayedText() === '') return;
+  // check if it's empty
+  if (isEmpty()) return;
   // check if last character is dot
   if (isLastCharDot()) return;
   write(event.target.textContent);

@@ -11,7 +11,7 @@ You can look at my progress in the TODO below...
 - [x] Calculate the result with keeping order of operations in mind ( \* and / => + and - )
 - [x] Identify type of last input (whether number or operator)
 - [x] Update the display
-- [ ] Handle the dot button
+- [x] Handle the dot button
 - [ ] Handle the change of operator precedence when parenthesis are added
 - [ ] Implement keyboard support
 - [ ] Handle negative numbers
