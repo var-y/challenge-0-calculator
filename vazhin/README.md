@@ -12,6 +12,7 @@ You can look at my progress in the TODO below...
 - [x] Identify type of last input (whether number or operator)
 - [x] Update the display
 - [x] Handle the dot button
+- [ ] Handle the Zero number's edge cases
 - [ ] Handle the change of operator precedence when parenthesis are added
 - [ ] Implement keyboard support
 - [ ] Handle negative numbers
