@@ -132,6 +132,10 @@ function getDisplayedText() {
   return display.value;
 }
 
+function getDisplayedLength() {
+  return getDisplayedText().length;
+}
+
 function setDisplayedText(updatedText) {
   display.value = updatedText;
 }
@@ -140,16 +144,40 @@ function write(output) {
   setDisplayedText(getDisplayedText() + output);
 }
 
+function isLastCharOperator() {
+  return calculator.operations[getDisplayedText()[getDisplayedLength() - 1]];
+}
+
+function getLastNumber() {
+  let lastOperatorIndex;
+
+  for (let i = getDisplayedLength() - 1; i >= 0; i--) {
+    if (calculator.operations[getDisplayedText()[i]]) {
+      lastOperatorIndex = i;
+      break;
+    }
+  }
+
+  const lastNumber = getDisplayedText().slice(
+    lastOperatorIndex + 1,
+    getDisplayedLength()
+  );
+
+  return lastNumber;
+}
+
 // Event Handler methods
 
 function handleNumber(event) {
-  calculator.setNewExpressionNumber(parseFloat(event.target.textContent));
   write(event.target.textContent);
 }
 
 function handleOperator(event) {
   // check if there's no numbers
   if (getDisplayedText() === '') return;
+  // check if last character is operator
+  if (isLastCharOperator()) return;
+  calculator.setNewExpressionNumber(parseFloat(getLastNumber()));
   calculator.setNewExpressionOperator(event.target.textContent);
   write(event.target.textContent);
 }
@@ -159,9 +187,10 @@ function handleResult() {
   if (!calculator.hasOperator) return;
   // check if there's no numbers
   if (getDisplayedText() === '') return;
-  // check if the last element is an operator
-  if (calculator.lastType === 'OPERATOR') return;
+  // check if last character is operator
+  if (isLastCharOperator()) return;
 
+  calculator.setNewExpressionNumber(parseFloat(getLastNumber()));
   setDisplayedText(calculator.calculate(calculator.inputQueue));
 }
 
