@@ -136,12 +136,20 @@ function getDisplayedLength() {
   return getDisplayedText().length;
 }
 
+function getLastChar() {
+  return getDisplayedText()[getDisplayedLength() - 1];
+}
+
 function setDisplayedText(updatedText) {
   display.value = updatedText;
 }
 
 function write(output) {
   setDisplayedText(getDisplayedText() + output);
+}
+
+function isLastCharDot() {
+  return getLastChar() === '.';
 }
 
 function isLastCharOperator() {
@@ -177,6 +185,8 @@ function handleOperator(event) {
   if (getDisplayedText() === '') return;
   // check if last character is operator
   if (isLastCharOperator()) return;
+  // check if last character is dot
+  if (isLastCharDot()) return;
   calculator.setNewExpressionNumber(parseFloat(getLastNumber()));
   calculator.setNewExpressionOperator(event.target.textContent);
   write(event.target.textContent);
@@ -199,7 +209,14 @@ function handleClearAll() {
   calculator.clearAll();
 }
 
-function handleDot() {}
+function handleDot(event) {
+  // check if there's no numbers
+  if (getDisplayedText() === '') return;
+  // check if last character is dot
+  if (isLastCharDot()) return;
+  write(event.target.textContent);
+}
+
 function handleClosingParenthesis() {}
 function handleOpeningParenthesis() {}
 
